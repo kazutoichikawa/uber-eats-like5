@@ -23,6 +23,16 @@ ActiveRecord::Schema.define(version: 2021_02_03_031456) do
   end
 
   create_table "line_foods", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "food_id", null: false
+    t.bigint "restaurant_id", null: false
+    t.bigint "order_id"
+    t.integer "count", default: 0, null: false
+    t.boolean "active", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["food_id"], name: "index_line_foods_on_food_id"
+    t.index ["order_id"], name: "index_line_foods_on_order_id"
+    t.index ["restaurant_id"], name: "index_line_foods_on_restaurant_id"
   end
 
   create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -42,5 +52,8 @@ ActiveRecord::Schema.define(version: 2021_02_03_031456) do
   end
 
   add_foreign_key "foods", "restaurants"
+  add_foreign_key "line_foods", "foods"
+  add_foreign_key "line_foods", "orders"
+  add_foreign_key "line_foods", "restaurants"
   add_foreign_key "orders", "restaurants"
 end
