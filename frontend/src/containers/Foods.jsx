@@ -1,12 +1,12 @@
-import React, { Fragment, useEffect, useReducer, useState } from 'react';
+import React, { Fragment,  useReducer, useEffect ,useState } from 'react';
 import styled from 'styled-components';
 import { useHistory, Link } from "react-router-dom";
 
 // components
 import { LocalMallIcon } from '../components/Icons';
 import { FoodWrapper } from '../components/FoodWrapper';
-import Skeleton from '@material-ui/lab/Skeleton';
 import { NewOrderConfirmDialog } from '../components/NewOrderConfirmDialog';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 // reducers
 import {
@@ -25,9 +25,9 @@ import { FoodOrderDialog } from '../components/FoodOrderDialog';
 import FoodImage from '../images/food-image.jpg';
 
 // constants
+import { HTTP_STATUS_CODE } from '../constants';
 import { COLORS } from '../style_constants';
 import { REQUEST_STATE } from '../constants';
-import { HTTP_STATUS_CODE } from '../constants';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -85,7 +85,7 @@ export const Foods = ({
         });
       })
   }, []);
-
+  
   const submitOrder = () => {
     postLineFoods({
       foodId: state.selectedFood.id,
@@ -111,7 +111,7 @@ export const Foods = ({
       foodId: state.selectedFood.id,
       count: state.selectedFoodCount,
     }).then(() => history.push('/orders'))
-  };
+  }
 
   return (
     <Fragment>
@@ -145,8 +145,8 @@ export const Foods = ({
                   onClickFoodWrapper={
                     (food) => setState({
                       ...state,
-                      isOpenOrderDialog: true,
                       selectedFood: food,
+                      isOpenOrderDialog: true,
                     })
                   }
                   imageUrl={FoodImage}
@@ -157,26 +157,26 @@ export const Foods = ({
       </FoodsList>
       {
         state.isOpenOrderDialog &&
-          <FoodOrderDialog
-            isOpen={state.isOpenOrderDialog}
-            food={state.selectedFood}
-            countNumber={state.selectedFoodCount}
-            onClickCountUp={() => setState({
-              ...state,
-              selectedFoodCount: state.selectedFoodCount + 1,
-            })}
-            onClickCountDown={() => setState({
-              ...state,
-              selectedFoodCount: state.selectedFoodCount - 1,
-            })}
-            onClickOrder={() => submitOrder()}
-            onClose={() => setState({
-              ...state,
-              isOpenOrderDialog: false,
-              selectedFood: null,
-              selectedFoodCount: 1,
-            })}
-          />
+        <FoodOrderDialog
+          isOpen={state.isOpenOrderDialog}
+          food={state.selectedFood}
+          countNumber={state.selectedFoodCount}
+          onClickCountUp={() => setState({
+            ...state,
+            selectedFoodCount: state.selectedFoodCount + 1,
+          })}
+          onClickCountDown={() => setState({
+            ...state,
+            selectedFoodCount: state.selectedFoodCount - 1,
+          })}
+          onClickOrder={() => submitOrder()}
+          onClose={() => setState({
+            ...state,
+            isOpenOrderDialog: false,
+            selectedFood: null,
+            selectedFoodCount: 1,
+          })}
+        />
       }
       {
         state.isOpenNewOrderDialog &&
